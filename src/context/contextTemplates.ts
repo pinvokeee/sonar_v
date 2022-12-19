@@ -1,28 +1,27 @@
 import { createContext, useCallback, useState } from "react";
+import { createContextEnviroment, createDefaultContextEnviroment, IContextEnviroment } from ".";
 import { ITemplateDirectoryNode } from "../types";
 
-//コンテキスト型→継承したカスタムフック→
+export const templatesNodeContext = createContext<IContextEnviroment<ITemplateDirectoryNode>>(createDefaultContextEnviroment<ITemplateDirectoryNode>());
+export const useContextTemplateNode = () : IContextEnviroment<ITemplateDirectoryNode> => createContextEnviroment<ITemplateDirectoryNode>();
 
-export interface IContextTemplatesNode
+export interface typeAAA
 {
-    node : ITemplateDirectoryNode,
-    setNode : (n : ITemplateDirectoryNode) => void;
-}
+    a : string,
 
-export const defaultContextTemplatesNode : IContextTemplatesNode = 
-{
-    node : { name: "ttt" },
-    setNode : () => {} 
-}
-
-export const templatesNodeContext = createContext<IContextTemplatesNode>(defaultContextTemplatesNode);
-
-export const useContextTemplateNode = () : IContextTemplatesNode =>
-{
-    const [node, setNode] = useState({ name: "" });
-    
-    return {
-        node, 
-        setNode
+    b : {
+        a: string,
     }
-}
+};
+
+export const testContext = createContext<IContextEnviroment<typeAAA>>(createDefaultContextEnviroment<typeAAA>());
+
+export const useTestContext = () : IContextEnviroment<typeAAA> => createContextEnviroment<typeAAA>(    {
+    a: "test",
+
+    b: 
+    {
+        a: "c",
+    }
+});
+

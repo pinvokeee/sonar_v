@@ -1,14 +1,8 @@
-import { storeTemplates } from "../loader/LoaderTemplates";
-
-export interface Store
-{
-    templateStore : storeTemplates
-}
-
 export interface ITemplateNode
 {
     name: string;
     nodeType?: string;
+    parent : ITemplateNode | null;
 }
 
 export interface ITemplateDirectoryNode extends ITemplateNode

@@ -11,7 +11,8 @@ export class LoaderTemplates
         return {
             name : name,
             nodeType: "directory",
-            children: []
+            children: [],
+            parent : null,
         };
     } 
 
@@ -21,6 +22,7 @@ export class LoaderTemplates
             name : name,
             nodeType: "content",
             content: "",
+            parent : null,
         };
     } 
 
@@ -51,14 +53,18 @@ export class LoaderTemplates
         {    
             if (value.kind == "directory")
             {
-                const newNode : ITemplateDirectoryNode = this.createDirectoryNode(name);                    
+                const newNode : ITemplateDirectoryNode = this.createDirectoryNode(name);       
+                newNode.parent = parentNode;
                 parentNode.children?.push(newNode);
+
                 await this.callLoadFromDirectoryHandle(value, newNode);
             }
             else
             {
                 const newNode : ITemplateContentNode = this.createContentNode(name);
+                newNode.parent = parentNode;                
                 newNode.content = await (await value.getFile()).text();
+
                 parentNode.children?.push(newNode);
             }
         }
